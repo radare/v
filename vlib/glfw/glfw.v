@@ -58,6 +58,7 @@ pub struct WinCfg {
 	borderless bool
 	is_modal   int
 	is_browser bool
+	resizable  bool
 	url        string
 	always_on_top     bool
 }
@@ -93,8 +94,17 @@ fn init() {
 }
 */
 
+pub fn (w &glfw.Window) set_resizable(arg bool) {
+	if (arg) {
+		C.glfwSetWindowSizeLimits(w, 0, 0, 0xffff, 0xffff)
+	} else {
+		C.glfwSetWindowSizeLimits(w, 0, 0, 0xffff, 0xffff)
+	}
+}
+
 pub fn init_glfw() {
 	C.glfwInit()
+	
 	C.glfwWindowHint(C.GLFW_CONTEXT_VERSION_MAJOR, 3)
 	C.glfwWindowHint(C.GLFW_CONTEXT_VERSION_MINOR, 3)
 	C.glfwWindowHint(C.GLFW_OPENGL_FORWARD_COMPAT, C.GL_TRUE)
@@ -122,6 +132,9 @@ pub fn create_window(c WinCfg) &glfw.Window {
 	if c.borderless {
 		window_hint(C.GLFW_RESIZABLE, 0)
 		window_hint(C.GLFW_DECORATED, 0)
+	}
+	if c.resizable {
+		window_hint(C.GLFW_RESIZABLE, if c.resizable { 1 } else { 0 })
 	}
 	if c.always_on_top {
 		window_hint(C.GLFW_FLOATING, 1)
