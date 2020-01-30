@@ -186,7 +186,7 @@ fn (p mut Parser) bterm() string {
 				}
 				else {
 				}}
-		}
+		} else
 		if is_ustr {
 			p.gen(')')
 			match tok {
@@ -210,7 +210,7 @@ fn (p mut Parser) bterm() string {
 				}
 				else {
 				}}
-		}
+		} else
 		if is_float && p.cur_fn.name != 'f32_abs' && p.cur_fn.name != 'f64_abs' {
 			p.gen(')')
 			match tok {
